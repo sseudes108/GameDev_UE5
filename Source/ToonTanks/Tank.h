@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -16,6 +14,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void Tick(float DeltaTime) override;
+
+	void HandleDestruction();
+
+	APlayerController* GetPlayerController() const {return PlayerController;}
 
 protected:
 	virtual void BeginPlay() override;	

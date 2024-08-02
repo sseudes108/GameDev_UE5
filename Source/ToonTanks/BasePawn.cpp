@@ -1,12 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "BasePawn.h"
 #include "Projectile.h"
 #include <Components/CapsuleComponent.h>
 
-// Sets default values
 ABasePawn::ABasePawn(){
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+
 	PrimaryActorTick.bCanEverTick = true;
 	
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
@@ -20,6 +17,10 @@ ABasePawn::ABasePawn(){
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+}
+
+void ABasePawn::HandleDestruction(){
+	// visual/soundEffect
 }
 
 void ABasePawn::RotateTurret(FVector lookAtTarget){

@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -13,11 +11,14 @@ class TOONTANKS_API ATower : public ABasePawn{
 public:
 	virtual void Tick(float DeltaTime) override;
 
+	void HandleDesctruction();
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	class ATank* Tank;
+	class UHealthComponent* TankHealth;
 
 	FVector TankLocation;
 	bool IsInFireRange();

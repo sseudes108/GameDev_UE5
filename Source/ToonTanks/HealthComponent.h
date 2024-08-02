@@ -12,6 +12,8 @@ class TOONTANKS_API UHealthComponent : public UActorComponent{
 public:	
 	UHealthComponent();
 
+	bool IsAlive() {return Health > 0; }
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -25,4 +27,6 @@ private:
 
 	UFUNCTION()
 	void DamageTaken(AActor* damagedActor, float Damage, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser);
+
+	class AToonTanks_GM* ToonTanksGM;
 };

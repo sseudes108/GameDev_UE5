@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "Tank.h"
 
 #include <GameFramework/SpringArmComponent.h>
@@ -42,6 +40,13 @@ void ATank::Tick(float DeltaTime){
 
         RotateTurret(HitResult.ImpactPoint);
     }
+}
+
+void ATank::HandleDestruction(){
+    Super::HandleDestruction();
+
+    SetActorHiddenInGame(true);
+    SetActorTickEnabled(false);
 }
 
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
