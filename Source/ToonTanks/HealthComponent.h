@@ -12,7 +12,7 @@ class TOONTANKS_API UHealthComponent : public UActorComponent{
 public:	
 	UHealthComponent();
 
-	bool IsAlive() {return Health > 0; }
+	bool IsAlive() {return Alive; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -23,7 +23,12 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.f;
+
+	UPROPERTY(VisibleAnywhere)
 	float Health;
+
+	UPROPERTY(VisibleAnywhere)
+	bool Alive;
 
 	UFUNCTION()
 	void DamageTaken(AActor* damagedActor, float Damage, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser);
