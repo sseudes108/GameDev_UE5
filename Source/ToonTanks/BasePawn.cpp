@@ -1,6 +1,10 @@
 #include "BasePawn.h"
+
 #include "Projectile.h"
+
 #include <Components/CapsuleComponent.h>
+#include <Kismet/GameplayStatics.h>
+
 
 ABasePawn::ABasePawn(){
 
@@ -20,7 +24,17 @@ ABasePawn::ABasePawn(){
 }
 
 void ABasePawn::HandleDestruction(){
-	// visual/soundEffect
+	if(DeathCameraShakeClass){
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass);
+	}
+	
+	if(DeathParticleEffect){
+		UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticleEffect, GetActorLocation(), GetActorRotation());
+	}
+
+	if(DeathSound){
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+	}
 }
 
 void ABasePawn::RotateTurret(FVector lookAtTarget){

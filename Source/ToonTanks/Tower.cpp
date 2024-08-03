@@ -1,7 +1,9 @@
 #include "Tower.h"
+
 #include "Tank.h"
-#include <Kismet/GameplayStatics.h>
 #include "HealthComponent.h"
+
+#include <Kismet/GameplayStatics.h>
 
 void ATower::BeginPlay(){
 	Super::BeginPlay();
