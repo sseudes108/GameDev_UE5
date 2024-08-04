@@ -14,11 +14,12 @@ void AShooterCharacter::BeginPlay(){
 
 void AShooterCharacter::Tick(float DeltaTime){
 	Super::Tick(DeltaTime);
+	auto vel = GetVelocity();
+	auto velLenght = vel.Size();
+	UE_LOG(LogTemp, Warning, TEXT("Velocity: %f"), velLenght);
 }
 
 void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent){
-	// Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 	//Link inputmapping
 	if(APlayerController* PlayerController = Cast<APlayerController>(GetController())){
 		if(UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())){
@@ -41,7 +42,6 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AShooterCharacter::Move(const FInputActionValue& Value){
 	FVector2D MovementVector = Value.Get<FVector2D>();
-
 	if(Controller != nullptr){
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
@@ -58,7 +58,7 @@ void AShooterCharacter::Move(const FInputActionValue& Value){
 void AShooterCharacter::Look(const FInputActionValue& Value){
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 	if(Controller != nullptr){
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
+		AddControllerYawInput(RotationXSensitivity * GetWorld()->GetDeltaSeconds() * LookAxisVector.X);
+		AddControllerPitchInput(RotationYSensitivity * GetWorld()->GetDeltaSeconds() * LookAxisVector.Y);
 	}
 }

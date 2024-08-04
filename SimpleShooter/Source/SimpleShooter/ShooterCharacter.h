@@ -24,6 +24,12 @@ class SIMPLESHOOTER_API AShooterCharacter : public ACharacter{
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* JumpInputAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	float RotationXSensitivity = 50.f;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	float RotationYSensitivity = 40.f;
+
 public:
 	AShooterCharacter();
 
