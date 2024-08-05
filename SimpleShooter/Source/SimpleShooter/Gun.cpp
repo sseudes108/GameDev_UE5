@@ -19,3 +19,7 @@ void AGun::BeginPlay(){
 void AGun::Tick(float DeltaTime){
 	Super::Tick(DeltaTime);
 }
+
+void AGun::PullTrigger(){
+	UE_LOG(LogTemp, Warning, TEXT("Shoot Fired!"));
+}
