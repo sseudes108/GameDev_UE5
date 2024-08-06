@@ -12,7 +12,6 @@ class SIMPLESHOOTER_API AGun : public AActor{
 
 public:	
 	AGun();
-
 	void PullTrigger();
 	
 protected:
@@ -27,4 +26,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAcess = "true"));
 	USkeletalMeshComponent* SkeletalMeshComponent;
+
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* MuzzleFlash;
+
+	UPROPERTY(EditAnywhere)
+	float MaxRange = 10000;
 };

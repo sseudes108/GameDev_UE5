@@ -1,6 +1,7 @@
 #include "Gun.h"
 
 #include "Components/SkeletalMeshComponent.h"
+#include <Kismet/GameplayStatics.h>
 
 AGun::AGun(){
 	PrimaryActorTick.bCanEverTick = true;
@@ -21,5 +22,23 @@ void AGun::Tick(float DeltaTime){
 }
 
 void AGun::PullTrigger(){
-	UE_LOG(LogTemp, Warning, TEXT("Shoot Fired!"));
+	UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, SkeletalMeshComponent, TEXT("MuzzleFlashSocket"));
+
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if(OwnerPawn == nullptr) { return; }
+
+	AController* OwnerController = OwnerPawn->GetController();
+	if(OwnerController == nullptr) { return; }
+
+	FVector OwnerLocation;
+	FRotator OwnerRotation;
+	OwnerController->GetPlayerViewPoint(OwnerLocation, OwnerRotation);
+
+	FHitResult HitResult;
+	FVector End = OwnerLocation + OwnerRotation.Vector() * MaxRange;
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, OwnerLocation, End, ECollisionChannel::ECC_GameTraceChannel1);
+
+	if(bHit){
+		DrawDebugPoint(GetWorld(), HitResult.ImpactPoint, 15, FColor::Yellow, true);
+	}
 }
