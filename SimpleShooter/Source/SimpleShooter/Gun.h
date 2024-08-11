@@ -12,6 +12,8 @@ class SIMPLESHOOTER_API AGun : public AActor{
 
 public:	
 	AGun();
+	
+	void Initialize(AController* OwnerController);
 	void PullTrigger();
 	
 protected:
@@ -27,9 +29,19 @@ private:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAcess = "true"));
 	USkeletalMeshComponent* SkeletalMeshComponent;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Visual Effects")
 	UParticleSystem* MuzzleFlash;
+
+	UPROPERTY(EditAnywhere, Category = "Visual Effects")
+	UParticleSystem* BulletImpact;
+
+	AController* OwnerController;
+	FVector OwnerLocation;
+	FRotator OwnerRotation;
 
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 10000;
+
+	UPROPERTY(EditAnywhere)
+	float Damage = 10;
 };

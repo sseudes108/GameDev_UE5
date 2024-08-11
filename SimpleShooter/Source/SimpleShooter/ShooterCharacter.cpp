@@ -13,7 +13,8 @@ AShooterCharacter::AShooterCharacter(){
 
 void AShooterCharacter::BeginPlay(){
 	Super::BeginPlay();
-	
+
+	ResetHealth();
 	SetUpGun();
 }
 
@@ -42,11 +43,12 @@ void AShooterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 		//Shoot
 		EnhancedInputComponent->BindAction(ShootInputAction, ETriggerEvent::Triggered, this, &AShooterCharacter::Shoot);
-		// EnhancedInputComponent->BindAction(ShootInputAction, ETriggerEvent::Ongoing, this, &AShooterCharacter::Shoot);
 	}
 }
 
 void AShooterCharacter::Move(const FInputActionValue& Value){
+	if(IsDead()) {return;}
+
 	FVector2D MovementVector = Value.Get<FVector2D>();
 	if(Controller != nullptr){
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -70,7 +72,12 @@ void AShooterCharacter::Look(const FInputActionValue& Value){
 }
 
 void AShooterCharacter::Shoot(){
+	if(IsDead()) {return;}
 	Gun->PullTrigger();
+}
+
+void AShooterCharacter::ResetHealth(){
+	CurrentHealth = MaxHealth;
 }
 
 void AShooterCharacter::SetUpGun(){
@@ -83,4 +90,21 @@ void AShooterCharacter::SetUpGun(){
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	Gun->AttachToComponent(SkeletalMesh, FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
+
+	Gun->Initialize(GetController());
+}
+
+float AShooterCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser){
+	if(EventInstigator == GetController()) {return 0;}
+
+	float DamageTaken = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	CurrentHealth -= DamageTaken;
+	if(CurrentHealth < 0) { CurrentHealth = 0; }
+
+	return DamageTaken;
+}
+
+bool AShooterCharacter::IsDead() const{
+	return CurrentHealth <= 0;
 }
