@@ -6,6 +6,7 @@
 
 class UBehaviorTree;
 class UBlackboardComponent;
+class AShooterCharacter;
 
 UCLASS()
 class SIMPLESHOOTER_API AShooterAIController : public AAIController{
@@ -16,6 +17,7 @@ protected:
 
 	bool NeedReset = false;
 	APawn* PlayerPawn;
+	AShooterCharacter* AICharacter;
 
 public:
 	virtual void Tick(float DeltaTime) override;
@@ -25,4 +27,7 @@ private:
 	UBehaviorTree* AIBehavior;
 
 	UBlackboardComponent* BlackboardComponent;
+
+	void GetPlayerLocation();
+	void ClearPlayerLocation();
 };

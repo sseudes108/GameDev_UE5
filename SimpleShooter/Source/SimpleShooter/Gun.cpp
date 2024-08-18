@@ -38,7 +38,7 @@ void AGun::PullTrigger(){
 		FVector ShotDirection = -OwnerRotation.Vector();
 
 		if(DamagedActor != nullptr){
-			if(DamagedActor == Owner) { return; }
+			// if(DamagedActor == Owner) { return; }
 			FPointDamageEvent DamageEvent(Damage, HitResult, ShotDirection, nullptr);
 			DamagedActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 		}

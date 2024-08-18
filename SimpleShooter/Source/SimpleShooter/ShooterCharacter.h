@@ -45,6 +45,7 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
+	void Shoot();
 
 private:
 	//Methods
@@ -53,7 +54,6 @@ private:
 	//Inputs
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
-	void Shoot();
 
 	//Gun
 	void SetUpGun();
